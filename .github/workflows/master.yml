@@ -9,12 +9,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write # Grants write permission to the contents scope
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "20"
 
@@ -24,12 +27,11 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Configure Git for authentication
+      - name: Deploy to GitHub Pages
         run: |
           git config --global user.email "devhasibulislam@gmail.com"
           git config --global user.name "devhasibulsilam"
-          git remote set-url origin https://x-access-token:${{ secrets.MY_PAT }}@github.com/${{ github.repository }}
-          git config --global url.https://x-access-token:${{ secrets.MY_PAT }}@github.com/.insteadOf https://github.com/
-
-      - name: Deploy to GitHub Pages
-        run: npm run deploy
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
