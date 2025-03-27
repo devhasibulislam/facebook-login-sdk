@@ -28,8 +28,8 @@ jobs:
         run: |
           git config --global user.email "devhasibulislam@gmail.com"
           git config --global user.name "devhasibulsilam"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git config --global url.https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/.insteadOf https://github.com/
+          git remote set-url origin https://x-access-token:${{ secrets.MY_PAT }}@github.com/${{ github.repository }}
+          git config --global url.https://x-access-token:${{ secrets.MY_PAT }}@github.com/.insteadOf https://github.com/
 
       - name: Deploy to GitHub Pages
         run: npm run deploy
